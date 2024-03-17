@@ -1,0 +1,62 @@
+.register__container {
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    min-height: 80vh;
+}
+
+
+.register__form {
+    padding: 20px;
+}
+
+.register__form h2 {
+    font-weight: normal;
+}
+
+.register__form--group {
+    margin-bottom: 15px;
+}
+
+.register__form--group-item {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    background-color: #f2f2f2;
+}
+
+.register__form--group-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #204adf;
+    color: white;
+    cursor: pointer;
+}
+
+.register__form--group-button:hover {
+    background-color: #0056b3;
+}
+
+.login__create--button {
+    display: block;
+    margin-top: 20px;
+    color: #204adf;
+    text-decoration: none;
+}
+
+.login__create--button:hover {
+    text-decoration: underline;
+}
+
+.layout-footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #fff;
+}

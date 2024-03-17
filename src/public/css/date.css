@@ -1,0 +1,59 @@
+.date-container {
+    padding: 20px;
+    background-color: #f2f2f2;
+    min-height: 80vh;
+}
+
+.date-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.date-nav-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #204adf;
+    font-size: 1.2em;
+}
+
+
+.current-date {
+    margin: 0 15px;
+}
+
+.work-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.work-table th,
+.work-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-link {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #204adf;
+}
+
+
+
+.layout-footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #fff;
+
+}
