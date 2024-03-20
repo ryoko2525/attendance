@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Laravel\Fortify\Events\Registered;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -16,7 +16,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         Registered::class => [
-            SendEmailVerificationNotification::class,
+            'App\Listeners\RedirectAfterRegistration',
         ],
     ];
 
@@ -27,6 +27,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        parent::boot();
+
+        // ユーザー登録後のイベントリスナー
+        \Illuminate\Support\Facades\Event::listen(Registered::class, function ($event) {
+            return Redirect::to('/login');
+        });
     }
 }
