@@ -8,12 +8,13 @@ Atte - 勤務打刻
     <ul class="header__nav--list">
         <li class="nav--list__item"><a href="/login">ホーム</a></li>
         <li class="nav--list__item"><a href="#">日付一覧</a></li>
-        @if(Auth::check())
         <form action="/logout" method="post">
-
-            @csrf
+        @csrf
+        @if(Auth::check())
             <button type=" submit" class="nav--list__item">ログアウト</button>
         </form>
+        @else
+        <p>ログインしていません</p>
         @endif
     </ul>
 </nav>

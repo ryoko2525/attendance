@@ -34,3 +34,4 @@ class BreakController extends Controller
         return view('');
     }
 }
+

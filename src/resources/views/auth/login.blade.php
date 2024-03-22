@@ -31,7 +31,7 @@ Atte - ログイン画面
             </div>
         </form>
         <p>アカウントをお持ちでない方はこちらから</p>
-        <a href="/register" class="register__create--button">会員登録</a>
+        <a href="{{ route('register') }}" class="register__create--button">会員登録</a>
     </div>
 </div>
 @endsection

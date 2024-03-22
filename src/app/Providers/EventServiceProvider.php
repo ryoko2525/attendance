@@ -15,9 +15,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            'App\Listeners\RedirectAfterRegistration',
-        ],
+        
     ];
 
     /**
@@ -29,9 +27,6 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        // ユーザー登録後のイベントリスナー
-        \Illuminate\Support\Facades\Event::listen(Registered::class, function ($event) {
-            return Redirect::to('/login');
-        });
+       
     }
 }

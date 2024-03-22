@@ -25,6 +25,9 @@ Route::get('/', [UserController::class, 'index']);
 Route::middleware('auth')->group(function () {
     Route::get('/stamp', [WorkController::class, 'index']);
 });
+//勤務開始
+Route::post('/work/start', [WorkController::class, 'start'])->name('work.start')->middleware('auth');
+
 
 
 // その日の打刻一覧

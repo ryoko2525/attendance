@@ -31,7 +31,7 @@ class FortifyServiceProvider extends ServiceProvider
             {
                 public function toResponse($request)
                 {
-                    return redirect('/');
+                    return redirect('/login');
                 }
             };
         });
@@ -44,19 +44,6 @@ class FortifyServiceProvider extends ServiceProvider
     {
         Fortify::createUsersUsing(CreateNewUser::class);
 
-        $this->app->singleton(RegisterResponse::class, function ($app) {
-            return new class implements RegisterResponse
-            {
-                public function toResponse($request)
-                {
-                    return redirect('/login')->with('status', '登録が完了しました。ログインしてください。');
-                }
-            };
-        });
-
-        Event::listen(Registered::class, function ($event) {
-            return Redirect::to('/login');
-        });
 
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
@@ -81,8 +68,5 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function () {
             return view('auth.register');
         });
-
-
     }
 }
-
