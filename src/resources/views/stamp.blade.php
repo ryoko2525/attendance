@@ -41,29 +41,29 @@ Atte - 打刻画面
     <div class="stamp__cards">
         {{-- 勤務開始ボタン --}}
         <div class="stamp-card">
-            <form action="{{ route('work.start') }}" method="POST" class="{{ $canPunch ? '' : 'disabled' }}">
+            <form action="{{ route('work.start') }}" method="POST" class="{{ !$isWorking && $canPunch ? '' : 'disabled' }}">
                 @csrf
-                <button type="submit" class="stamp-button" {{ $canPunch ? '' : 'disabled' }}>勤務開始</button>
+                <button type="submit" class="stamp-button" {{ !$isWorking && $canPunch ? '' : 'disabled' }}>勤務開始</button>
             </form>
         </div>
 
-        {{-- 勤務終了、休憩開始、休憩終了ボタン --}}
         <div class="stamp-card">
             <form action="{{ route('work.end') }}" method="POST" class="{{ $isWorking && $canPunch ? '' : 'disabled' }}">
                 @csrf
                 <button type="submit" class="stamp-button" {{ $isWorking && $canPunch ? '' : 'disabled' }}>勤務終了</button>
             </form>
         </div>
+        {{-- 休憩開始ボタン --}}
         <div class="stamp-card">
-            <form action="{{ route('break.start') }}" method="POST" class="{{ $isWorking && $canPunch ? '' : 'disabled' }}">
+            <form action="{{ route('break.start') }}" method="POST" class="{{ $isWorking && !$isOnBreak && $canPunch ? '' : 'disabled' }}">
                 @csrf
-                <button type="submit" class="stamp-button" {{ $isWorking && $canPunch ? '' : 'disabled' }}>休憩開始</button>
+                <button type="submit" class="stamp-button" {{ $isWorking && !$isOnBreak && $canPunch ? '' : 'disabled' }}>休憩開始</button>
             </form>
         </div>
         <div class="stamp-card">
-            <form action="{{ route('break.end') }}" method="POST" class="{{ $isWorking && $canPunch ? '' : 'disabled' }}">
+            <form action="{{ route('break.end') }}" method="POST" class="{{ $isOnBreak ? '' : 'disabled' }}">
                 @csrf
-                <button type="submit" class="stamp-button" {{ $isWorking && $canPunch ? '' : 'disabled' }}>休憩終了</button>
+                <button type="submit" class="stamp-button" {{ $isOnBreak ? '' : 'disabled' }}>休憩終了</button>
             </form>
         </div>
 
