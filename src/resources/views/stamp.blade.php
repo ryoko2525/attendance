@@ -6,7 +6,20 @@ Atte - 打刻画面
 @section('header-nav')
 
 <nav class="header__nav">
+
     <ul class="header__nav--list">
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+
         <li class="nav--list__item"><a href="/register">ホーム</a></li>
         <li class="nav--list__item"><a href="#">日付一覧</a></li>
 
@@ -23,32 +36,38 @@ Atte - 打刻画面
 @endsection
 @section('content')
 <main class=" stamp__container">
-    <h2>福岡太郎さんお疲れ様です！</h2>
+    <h2>{{ Auth::user()->name }} さんお疲れ様です！</h2>
+
     <div class="stamp__cards">
+        {{-- 勤務開始ボタン --}}
         <div class="stamp-card">
-            <form action="{{ route('work.start') }}" method="POST">
+            <form action="{{ route('work.start') }}" method="POST" class="{{ $canPunch ? '' : 'disabled' }}">
                 @csrf
-                <button type="submit" class="stamp-button">勤務開始</button>
+                <button type="submit" class="stamp-button" {{ $canPunch ? '' : 'disabled' }}>勤務開始</button>
+            </form>
+        </div>
+
+        {{-- 勤務終了、休憩開始、休憩終了ボタン --}}
+        <div class="stamp-card">
+            <form action="{{ route('work.end') }}" method="POST" class="{{ $isWorking && $canPunch ? '' : 'disabled' }}">
+                @csrf
+                <button type="submit" class="stamp-button" {{ $isWorking && $canPunch ? '' : 'disabled' }}>勤務終了</button>
             </form>
         </div>
         <div class="stamp-card">
-            <form action="" method="POST">
+            <form action="{{ route('break.start') }}" method="POST" class="{{ $isWorking && $canPunch ? '' : 'disabled' }}">
                 @csrf
-                <button type="submit" class="stamp-button">勤務終了</button>
+                <button type="submit" class="stamp-button" {{ $isWorking && $canPunch ? '' : 'disabled' }}>休憩開始</button>
             </form>
         </div>
         <div class="stamp-card">
-            <form action="" method="POST">
+            <form action="{{ route('break.end') }}" method="POST" class="{{ $isWorking && $canPunch ? '' : 'disabled' }}">
                 @csrf
-                <button type="submit" class="stamp-button">休憩開始</button>
+                <button type="submit" class="stamp-button" {{ $isWorking && $canPunch ? '' : 'disabled' }}>休憩終了</button>
             </form>
         </div>
-        <div class="stamp-card">
-            <form action="" method="POST">
-                @csrf
-                <button type="submit" class="stamp-button">休憩終了</button>
-            </form>
-        </div>
+
+
     </div>
 </main>
 @endsection

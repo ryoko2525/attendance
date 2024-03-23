@@ -34,8 +34,8 @@ h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-size: 20px;
     cursor: pointer;
+    transition: filter 0.3s ease;
 }
-
 
 
 
@@ -43,8 +43,39 @@ h2 {
     background-color: #f2f2f2;
 }
 
+/* 押せないボタンのスタイル */
+form.disabled .stamp-button,
+.stamp-button[disabled] {
+    cursor: not-allowed;
+    filter: grayscale(100%);
+}
+
+/* 押せないボタンはホバーしても背景色が変わらない */
+form.disabled .stamp-button:hover,
+.stamp-button[disabled]:hover {
+    background-color: #fff;
+}
+
 .layout-footer {
     text-align: center;
     padding: 5px;
     background-color: #fff;
+}
+
+.alert {
+    color: red;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    animation: slide-in 0.5s forwards;
+}
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%);
+        opacity: 1;
+    }
 }

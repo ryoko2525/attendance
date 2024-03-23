@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class BreakTime extends Model
 {
+    protected $table = 'breaktimes';
     use HasFactory;
-    protected $fillable = ['start_time', 'end_time', ''];
+    protected $fillable = ['work_id', 'start_time', 'end_time'];
 
-     public function work()
+    public function work()
     {
         return $this->belongsTo(Work::class);
     }
