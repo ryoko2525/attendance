@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\WorksController;
+
 use App\Http\Controllers\BreakController;
 
 
@@ -37,3 +39,5 @@ Route::post('/break/end', [BreakController::class, 'end'])->name('break.end')->m
 
 // その日の打刻一覧
 Route::get('/date', [WorkController::class, 'show']);
+
+Route::get('/date/{date?}', [WorksController::class, 'show'])->name('works.day')->middleware('auth');

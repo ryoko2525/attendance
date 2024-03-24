@@ -16,3 +16,4 @@ class BreakTime extends Model
         return $this->belongsTo(Work::class);
     }
 }
+

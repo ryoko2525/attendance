@@ -9,8 +9,8 @@ Atte - 勤務打刻
         <li class="nav--list__item"><a href="/login">ホーム</a></li>
         <li class="nav--list__item"><a href="#">日付一覧</a></li>
         <form action="/logout" method="post">
-        @csrf
-        @if(Auth::check())
+            @csrf
+            @if(Auth::check())
             <button type=" submit" class="nav--list__item">ログアウト</button>
         </form>
         @else
@@ -24,7 +24,7 @@ Atte - 勤務打刻
 <main class="date-container">
     <div class="date-navigation">
         <button class="date-nav-button">&#60;</button>
-        <span class="current-date">2021-11-01</span>
+        <span class="current-date">{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}</span>
         <button class="date-nav-button">&#62;</button>
     </div>
     <table class="work-table">
@@ -35,23 +35,18 @@ Atte - 勤務打刻
             <th>休憩時間</th>
             <th>勤務時間</th>
         </tr>
-        <!-- 仮のデータを表示、サーバーサイドのデータに置き換える -->
+        @foreach ($works as $work)
         <tr>
-            <td>テスト 太郎</td>
-            <td>10:00:00</td>
-            <td>20:00:00</td>
-            <td>00:30:00</td>
-            <td>09:30:00</td>
+            <td>{{ $work->user->name }}</td>
+            <td>{{ $work->start_time->format('H:i:s') }}</td>
+            <td>{{ $work->end_time ? $work->end_time->format('H:i:s') : '---' }}</td>
+            <td>{{ gmdate('H:i:s', $work->total_break_duration) }}</td>
+            <td>{{ gmdate('H:i:s', $work->work_duration) }}</td>
         </tr>
-        <!-- 繰り返し部分 -->
+        @endforeach
     </table>
     <div class="pagination">
-        <!-- 仮のページネーション、実際のデータとリンクに置き換える -->
-        <a href="#" class="page-link">&#60;</a>
-        <!-- ページ番号を動的に生成 -->
-        <a href="#" class="page-link">1</a>
-        <!-- 繰り返し部分 -->
-        <a href="#" class="page-link">&#62;</a>
+        {{ $works->links() }}
     </div>
 </main>
 @endsection

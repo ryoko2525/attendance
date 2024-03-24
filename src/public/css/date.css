@@ -7,6 +7,17 @@
     cursor: pointer;
 }
 
+.pagination a {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #204adf;
+    text-decoration: none;
+}
+.pagination a:hover {
+    background-color: #f0f0f0;
+}
+
 
 
 
@@ -24,8 +35,10 @@
 }
 
 .date-nav-button {
-    border: none;
-    background-color: transparent;
+    border: 1px solid blue;
+    background-color: whitesmoke;
+        /* 角を丸くする */
+        padding: 3px 13px;
     cursor: pointer;
     color: #204adf;
     font-size: 1.2em;

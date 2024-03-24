@@ -21,7 +21,7 @@ Atte - 打刻画面
         @endif
 
         <li class="nav--list__item"><a href="/register">ホーム</a></li>
-        <li class="nav--list__item"><a href="#">日付一覧</a></li>
+        <li class="nav--list__item"><a href="{{ route('works.day', ['date' => now()->format('Y-m-d')]) }}">日付一覧</a></li>
 
         <form action="/logout" method="post">
             @csrf
