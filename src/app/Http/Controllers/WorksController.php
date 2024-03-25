@@ -20,17 +20,14 @@ class WorksController extends Controller
         return view('index', compact('works'));
     }
 
-    public function show($date)
+    public function show( $date = null)
     {
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login')->withErrors('You must be logged in.');
-        }
+        $date = $date ?? Carbon::today()->format('Y-m-d');
 
-        $works = Work::with(['breakTimes']) // 休憩時間のリレーションを事前に読み込む
-        ->where('user_id', $user->id)
-        ->whereDate('work_date', $date)
-        ->paginate(5);
+        // 特定の日付に勤務しているすべてのユーザーの勤務記録を取得
+        $works = Work::with(['breakTimes', 'user']) // ユーザー情報と休憩時間のリレーションを事前に読み込む
+            ->whereDate('work_date', $date)
+            ->paginate(5);
         // 各勤務記録に対して勤務時間と休憩時間を計算
         foreach ($works as $work) {
             $totalBreakDuration = $work->breakTimes->sum(function ($break) {
@@ -42,9 +39,7 @@ class WorksController extends Controller
             }
             $work->total_break_duration = $totalBreakDuration;
             $work->work_duration = $workDuration;
-        
         }
-
 
         return view('date', compact('works', 'date'));
     }

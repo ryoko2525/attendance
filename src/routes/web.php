@@ -37,7 +37,5 @@ Route::post('/break/start', [BreakController::class, 'start'])->name('break.star
 Route::post('/break/end', [BreakController::class, 'end'])->name('break.end')->middleware('auth');
 
 
-// その日の打刻一覧
-Route::get('/date', [WorkController::class, 'show']);
-
+//日別勤怠
 Route::get('/date/{date?}', [WorksController::class, 'show'])->name('works.day')->middleware('auth');

@@ -22,11 +22,13 @@ Atte - 勤務打刻
 @section('content')
 
 <main class="date-container">
+    @if(isset($date))
     <div class="date-navigation">
-        <button class="date-nav-button">&#60;</button>
+        <a href="{{ route('works.day', ['date' => \Carbon\Carbon::parse($date)->subDay()->format('Y-m-d')]) }}" class="date-nav-button">&#60;</a>
         <span class="current-date">{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}</span>
-        <button class="date-nav-button">&#62;</button>
+        <a href="{{ route('works.day', ['date' => \Carbon\Carbon::parse($date)->addDay()->format('Y-m-d')]) }}" class="date-nav-button">&#62;</a>
     </div>
+    @endif
     <table class="work-table">
         <tr>
             <th>名前</th>
@@ -38,12 +40,13 @@ Atte - 勤務打刻
         @foreach ($works as $work)
         <tr>
             <td>{{ $work->user->name }}</td>
-            <td>{{ $work->start_time->format('H:i:s') }}</td>
+            <td>{{ $work->start_time ? $work->start_time->format('H:i:s') : '---' }}</td>
             <td>{{ $work->end_time ? $work->end_time->format('H:i:s') : '---' }}</td>
             <td>{{ gmdate('H:i:s', $work->total_break_duration) }}</td>
             <td>{{ gmdate('H:i:s', $work->work_duration) }}</td>
         </tr>
         @endforeach
+
     </table>
     <div class="pagination">
         {{ $works->links() }}
