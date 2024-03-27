@@ -1,12 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\SessionController;
-use App\Http\Controllers\WorkController;
-use App\Http\Controllers\WorksController;
+use App\Http\Controllers\{UserController, WorkController, WorksController, BreakController};
 
-use App\Http\Controllers\BreakController;
 
 
 /*
@@ -19,23 +15,13 @@ use App\Http\Controllers\BreakController;
 | contains the "web" middleware group. Now create something great!
 |
 // */
-// ユーザー登録画面
 Route::get('/', [UserController::class, 'index']);
 
-// 打刻画面
 Route::middleware('auth')->group(function () {
     Route::get('/stamp', [WorkController::class, 'index']);
+    Route::post('/work/start', [WorkController::class, 'start'])->name('work.start');
+    Route::post('/work/end', [WorkController::class, 'end'])->name('work.end');
+    Route::post('/break/start', [BreakController::class, 'start'])->name('break.start');
+    Route::post('/break/end', [BreakController::class, 'end'])->name('break.end');
+    Route::get('/date/{date?}', [WorksController::class, 'show'])->name('works.day');
 });
-//勤務開始
-Route::post('/work/start', [WorkController::class, 'start'])->name('work.start')->middleware('auth');
-//勤務終了
-Route::post('/work/end', [WorkController::class, 'end'])->name('work.end')->middleware('auth');
-
-//休憩開始
-Route::post('/break/start', [BreakController::class, 'start'])->name('break.start')->middleware('auth');
-//休憩終了
-Route::post('/break/end', [BreakController::class, 'end'])->name('break.end')->middleware('auth');
-
-
-//日別勤怠
-Route::get('/date/{date?}', [WorksController::class, 'show'])->name('works.day')->middleware('auth');

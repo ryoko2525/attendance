@@ -13,6 +13,10 @@
     padding: 20px;
     background-color: #f2f2f2;
     min-height: 80vh;
+    box-sizing: border-box;
+        /* 追加 */
+        /* width: 100%; */
+        /* 追加 */
 
 }
 
@@ -67,15 +71,26 @@ form.disabled .stamp-button:hover,
     margin-bottom: 10px;
     font-size: 1.2rem;
     animation: slide-in 0.5s forwards;
+    position: fixed;
+    /* アラートをビューポートに対して固定 */
+    left: 50%;
+    /* ビューポートの中央に配置 */
+    transform: translateX(-50%);
+    /* 要素の中心がビューポートの中央に来るように */
+    top: 50px;
+    /* ヘッダーの高さに応じて調整 */
 }
+
 @keyframes slide-in {
     from {
-        transform: translateX(-100%);
+        transform: translateY(-100%);
+        /* 上から下へのアニメーションに変更 */
         opacity: 0;
     }
 
     to {
-        transform: translateX(-50%);
+        transform: translateY(0);
+        /* 最終的な位置 */
         opacity: 1;
     }
 }

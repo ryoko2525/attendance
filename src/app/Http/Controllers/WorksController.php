@@ -11,35 +11,25 @@ class WorksController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        if (!$user) {
+        if (!Auth::check()) {
             return redirect()->route('login')->withErrors('You must be logged in.');
         }
 
-        $works = Work::where('user_id', $user->id)->paginate(5);
+        $works = Work::where('user_id', Auth::id())->paginate(5);
         return view('index', compact('works'));
     }
 
-    public function show( $date = null)
+    public function show($date = null)
     {
         $date = $date ?? Carbon::today()->format('Y-m-d');
 
-        // 特定の日付に勤務しているすべてのユーザーの勤務記録を取得
-        $works = Work::with(['breakTimes', 'user']) // ユーザー情報と休憩時間のリレーションを事前に読み込む
+        // 特定の日付に働いている全ユーザーの勤務記録を取得
+        $works = Work::with(['breakTimes', 'user']) // ユーザー情報と休憩時間の関係を事前に読み込む
             ->whereDate('work_date', $date)
             ->paginate(5);
-        // 各勤務記録に対して勤務時間と休憩時間を計算
-        foreach ($works as $work) {
-            $totalBreakDuration = $work->breakTimes->sum(function ($break) {
-                return Carbon::parse($break->end_time)->diffInSeconds(Carbon::parse($break->start_time));
-            });
-            $workDuration = 0;
-            if (!empty($work->end_time)) {
-                $workDuration = Carbon::parse($work->end_time)->diffInSeconds(Carbon::parse($work->start_time)) - $totalBreakDuration;
-            }
-            $work->total_break_duration = $totalBreakDuration;
-            $work->work_duration = $workDuration;
-        }
+
+        // 各勤務記録の勤務時間と休憩時間を計算
+        $works->getCollection()->each->calculateDurations();
 
         return view('date', compact('works', 'date'));
     }

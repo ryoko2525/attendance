@@ -16,7 +16,6 @@ class Work extends Model
         'end_time' => 'datetime',
     ];
 
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,33 +25,63 @@ class Work extends Model
     {
         return $this->hasMany(BreakTime::class);
     }
-    //work_durationのアクセサを追加
+
+    /**
+     * 勤務時間の取得
+     * 
+     * @return int 勤務時間（秒）
+     */
     public function getWorkDurationAttribute()
     {
+        if (is_null($this->start_time)) {
+            return 0;
+        }
+
         $start = Carbon::parse($this->start_time);
         $end = $this->end_time ? Carbon::parse($this->end_time) : Carbon::now();
         $totalDurationInSeconds = $end->diffInSeconds($start);
 
-        // 休憩終了時刻が設定されている休憩のみを計算に含める
+        $totalBreakDurationInSeconds = $this->calculateTotalBreakDurationInSeconds();
+
+        return $totalDurationInSeconds - $totalBreakDurationInSeconds;
+    }
+
+    /**
+     * 休憩時間の合計を秒で計算
+     * 
+     * @return int 休憩時間の合計（秒）
+     */
+    private function calculateTotalBreakDurationInSeconds()
+    {
         $totalBreakDurationInSeconds = $this->breakTimes->whereNotNull('end_time')->sum(function ($break) {
-            $breakStart = Carbon::parse($break->start_time);
-            $breakEnd = Carbon::parse($break->end_time);
-            return $breakEnd->diffInSeconds($breakStart);
+            return Carbon::parse($break->end_time)->diffInSeconds(Carbon::parse($break->start_time));
         });
 
-        // 現在休憩中の場合、その休憩時間を勤務時間から除外する
         $ongoingBreak = $this->breakTimes->whereNull('end_time')->first();
         if ($ongoingBreak) {
             $ongoingBreakStart = Carbon::parse($ongoingBreak->start_time);
             $ongoingBreakDurationInSeconds = Carbon::now()->diffInSeconds($ongoingBreakStart);
-            // 現在休憩中の時間を休憩時間に加える
             $totalBreakDurationInSeconds += $ongoingBreakDurationInSeconds;
         }
 
-            // 勤務時間から休憩時間を引いた値を秒で返す
-            return $totalDurationInSeconds - $totalBreakDurationInSeconds;
-        
-        return 0; // 勤務終了時刻がない場合は0を返す
+        return $totalBreakDurationInSeconds;
     }
 
+    /**
+     * 勤務時間と休憩時間の計算を行い、プロパティにセット
+     */
+    public function calculateDurations()
+    {
+        $totalBreakDuration = $this->calculateTotalBreakDurationInSeconds();
+
+        $workDuration = 0;
+        if (!empty($this->end_time)) {
+            $start = Carbon::parse($this->start_time);
+            $end = Carbon::parse($this->end_time);
+            $workDuration = $end->diffInSeconds($start) - $totalBreakDuration;
+        }
+
+        $this->total_break_duration = $totalBreakDuration;
+        $this->work_duration = $workDuration;
+    }
 }

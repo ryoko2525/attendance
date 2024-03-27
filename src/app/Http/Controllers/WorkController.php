@@ -44,11 +44,6 @@ class WorkController extends Controller
     }
     }
 
-    public function show()
-    {
-
-        return view('date');
-    }
 
     public function start(Request $request)
     {
@@ -91,7 +86,7 @@ class WorkController extends Controller
             return redirect()->back()->with('error', '出勤打刻がまだされていません。');
         }
         if (!empty($work->end_time)) {
-            return redirect()->back()->with('error', '既に退勤の打刻がされているか、出勤打刻されていません');
+            return redirect()->back()->with('error', '既に退勤の打刻がされています。');
         }
         // 休憩中であれば休憩を終了させる
         $ongoingBreak = BreakTime::where('work_id', $work->id)
