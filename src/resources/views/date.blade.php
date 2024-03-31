@@ -28,7 +28,6 @@ Atte - 勤務打刻
             <td>{{ gmdate('H:i:s', $work->work_duration) }}</td>
         </tr>
         @endforeach
-
     </table>
     <div class="pagination">
         {{ $works->links() }}

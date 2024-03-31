@@ -25,3 +25,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/break/end', [BreakController::class, 'end'])->name('break.end');
     Route::get('/date/{date?}', [WorksController::class, 'show'])->name('works.day');
 });
+
+Route::get('/works/json/{date?}', [WorksController::class, 'getWorksJson']);

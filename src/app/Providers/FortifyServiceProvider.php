@@ -14,13 +14,13 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
-use Laravel\Fortify\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Events\Registered;
 
 class FortifyServiceProvider extends ServiceProvider
 {
-    /**
+    /*
      * Register any application services.
      */
     public function register(): void
@@ -36,7 +36,7 @@ class FortifyServiceProvider extends ServiceProvider
             };
         });
     }
-
+    
     /**
      * Bootstrap any application services.
      */
@@ -67,6 +67,9 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::registerView(function () {
             return view('auth.register');
+        });
+        Event::listen(Registered::class, function ($event) {
+            $event->user->sendEmailVerificationNotification();
         });
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Laravel\Fortify\Events\Registered;
+use Illuminate\Auth\Events\Registered as RegisteredEvent;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -15,7 +17,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        
+        RegisteredEvent::class => [
+            SendEmailVerificationNotification::class, // 追加
+        ],
     ];
 
     /**
@@ -30,3 +34,4 @@ class EventServiceProvider extends ServiceProvider
        
     }
 }
+

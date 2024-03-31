@@ -27,6 +27,28 @@ class Work extends Model
     }
 
     /**
+     * 休憩時間の合計を秒で計算
+     * 
+     * @return int 休憩時間の合計（秒）
+     */
+    private function calculateTotalBreakDurationInSeconds()
+    {
+        //終了してる休憩時間合計
+        $totalBreakDurationInSeconds = $this->breakTimes->whereNotNull('end_time')->sum(function ($break) {
+            return Carbon::parse($break->end_time)->diffInSeconds(Carbon::parse($break->start_time));
+        });
+
+        //進行中の休憩時間も➕
+        $ongoingBreak = $this->breakTimes->whereNull('end_time')->first();
+        if ($ongoingBreak) {
+            $ongoingBreakStart = Carbon::parse($ongoingBreak->start_time);
+            $ongoingBreakDurationInSeconds = Carbon::now()->diffInSeconds($ongoingBreakStart);
+            $totalBreakDurationInSeconds += $ongoingBreakDurationInSeconds;
+        }
+
+        return $totalBreakDurationInSeconds;
+    }
+    /*
      * 勤務時間の取得
      * 
      * @return int 勤務時間（秒）
@@ -47,27 +69,6 @@ class Work extends Model
     }
 
     /**
-     * 休憩時間の合計を秒で計算
-     * 
-     * @return int 休憩時間の合計（秒）
-     */
-    private function calculateTotalBreakDurationInSeconds()
-    {
-        $totalBreakDurationInSeconds = $this->breakTimes->whereNotNull('end_time')->sum(function ($break) {
-            return Carbon::parse($break->end_time)->diffInSeconds(Carbon::parse($break->start_time));
-        });
-
-        $ongoingBreak = $this->breakTimes->whereNull('end_time')->first();
-        if ($ongoingBreak) {
-            $ongoingBreakStart = Carbon::parse($ongoingBreak->start_time);
-            $ongoingBreakDurationInSeconds = Carbon::now()->diffInSeconds($ongoingBreakStart);
-            $totalBreakDurationInSeconds += $ongoingBreakDurationInSeconds;
-        }
-
-        return $totalBreakDurationInSeconds;
-    }
-
-    /**
      * 勤務時間と休憩時間の計算を行い、プロパティにセット
      */
     public function calculateDurations()
@@ -84,4 +85,5 @@ class Work extends Model
         $this->total_break_duration = $totalBreakDuration;
         $this->work_duration = $workDuration;
     }
+    
 }
