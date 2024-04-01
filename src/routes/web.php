@@ -15,7 +15,7 @@ use App\Http\Controllers\{UserController, WorkController, WorksController, Break
 | contains the "web" middleware group. Now create something great!
 |
 // */
-Route::get('/', [UserController::class, 'index']);
+Route::get('/', [UserController::class, 'show']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/stamp', [WorkController::class, 'index']);
@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/break/start', [BreakController::class, 'start'])->name('break.start');
     Route::post('/break/end', [BreakController::class, 'end'])->name('break.end');
     Route::get('/date/{date?}', [WorksController::class, 'show'])->name('works.day');
+    //ユーザー一覧
+    Route::get('/users', [UserController::class,'index'])->name('users.index');
+    //ユーザーごとの勤務記録
+    Route::get('/users/{user}/attendance', [UserController::class, 'showAttendance'])->name('users.attendance');
 });
-
-Route::get('/works/json/{date?}', [WorksController::class, 'getWorksJson']);
+// 消していいかも
+// Route::get('/works/json/{date?}', [WorksController::class, 'getWorksJson']);

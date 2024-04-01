@@ -31,7 +31,7 @@ class Work extends Model
      * 
      * @return int 休憩時間の合計（秒）
      */
-    private function calculateTotalBreakDurationInSeconds()
+    public function calculateTotalBreakDurationInSeconds()
     {
         //終了してる休憩時間合計
         $totalBreakDurationInSeconds = $this->breakTimes->whereNotNull('end_time')->sum(function ($break) {

@@ -17,10 +17,22 @@
 .nav--list__item {
     margin-left: 20px;
     padding-left: 20px;
+    border: none;
+        background-color: transparent;
+        font-size: 1rem;
+}
+.nav--list__item:hover {
+    cursor: pointer;
 }
 
 
 .nav--list__item a {
     text-decoration: none;
     color: inherit;
+}
+
+.layout-footer {
+    text-align: center;
+    padding: 5px;
+    background-color: #fff;
 }

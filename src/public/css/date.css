@@ -1,11 +1,4 @@
-.nav--list__item {
-    border: none;
-    background-color: transparent;
-    font-size: 1rem;
-}
-.nav--list__item:hover {
-    cursor: pointer;
-}
+
 
 .pagination a {
     border: 1px solid #ddd;
@@ -16,6 +9,17 @@
 }
 .pagination a:hover {
     background-color: #f0f0f0;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-link {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #204adf;
 }
 
 
@@ -42,6 +46,7 @@
     cursor: pointer;
     color: #204adf;
     font-size: 1.2em;
+    text-decoration: none;
 }
 
 
@@ -62,23 +67,4 @@
 }
 
 
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
 
-.page-link {
-    margin: 0 5px;
-    text-decoration: none;
-    color: #204adf;
-}
-
-
-
-.layout-footer {
-    text-align: center;
-    padding: 5px;
-    background-color: #fff;
-
-}

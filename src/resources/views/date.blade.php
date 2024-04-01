@@ -21,7 +21,7 @@ Atte - 勤務打刻
         </tr>
         @foreach ($works as $work)
         <tr>
-            <td>{{ $work->user->name }}</td>
+            <td><a href="{{ route('users.attendance', $work->user->id) }}">{{ $work->user->name }}</a></td>
             <td>{{ $work->start_time ? $work->start_time->format('H:i:s') : '---' }}</td>
             <td>{{ $work->end_time ? $work->end_time->format('H:i:s') : '---' }}</td>
             <td>{{ gmdate('H:i:s', $work->total_break_duration) }}</td>
