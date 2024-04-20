@@ -75,6 +75,7 @@ return [
     |
     */
 
+    
     'home' => '/stamp',
 
     /*

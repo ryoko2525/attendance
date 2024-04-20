@@ -17,7 +17,7 @@ use App\Http\Controllers\{UserController, WorkController, WorksController, Break
 // */
 Route::get('/', [UserController::class, 'show']);
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/stamp', [WorkController::class, 'index']);
     Route::post('/work/start', [WorkController::class, 'start'])->name('work.start');
     Route::post('/work/end', [WorkController::class, 'end'])->name('work.end');
