@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Verified</title>
-</head>
-
-<body>
-    <h1>Your email has been successfully verified.</h1>
-    <p>Thank you for verifying your email address. You can now continue to use the application.</p>
-</body>
-
-</html>
+@extends('layouts.app')
+@section('title')
+Atte - メール認証
+@endsection
+<link href="{{ asset('css/verify.css') }}" rel="stylesheet">
+@section('content')
+<div class="verify-email__container">
+    <h1 class="verify-email__title">新規ユーザー登録のため、メールが送信されました</h1>
+    <p class="verify-email__message">ご登録ありがとうございます。メールをご確認の上、リンクをクリックしてログインしてください。</p>
+</div>
+@endsection

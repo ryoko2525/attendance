@@ -1,0 +1,47 @@
+/* verify-emailページのコンテナスタイル */
+.verify-email__container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f2f2f2;
+    min-height: 80vh;
+    box-sizing: border-box;
+}
+
+/* タイトルのスタイル */
+.verify-email__container h1 {
+    margin-bottom: 40px;
+    color: #333;
+    /* タイトルの色 */
+    font-size: 2rem;
+    /* タイトルのフォントサイズ */
+}
+
+/* メッセージのスタイル */
+.verify-email__container p {
+    font-size: 1.2rem;
+    /* メッセージのフォントサイズ */
+    color: #666;
+    /* メッセージの色 */
+    max-width: 600px;
+    /* メッセージの最大幅 */
+    margin: 0 auto;
+    /* 中央揃え */
+}
+
+/* ボタンスタイルの適用例 */
+.verify-email__container .verify-button {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1em 4em;
+    /* ボタンのパディングを調整 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.2rem;
+    /* ボタンのフォントサイズを調整 */
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.verify-email__container .verify-button:hover {
+    background-color: #f2f2f2;
+}
